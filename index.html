@@ -192,6 +192,7 @@ div.chip:not(.on){opacity:.45}
   .big.lose,.endBox.lose::after{animation:none}
 }
 
+
 /* ===== v3 ついか ===== */
 [hidden]{display:none!important}
 details.rule summary{cursor:pointer;color:var(--lamp)}
@@ -210,11 +211,11 @@ div.chip.new{background:var(--red);border-color:var(--red);color:#fff;opacity:1}
 h2{font-weight:400;color:var(--lamp);font-size:1.5rem;margin:4px 0 8px}
 .memo{background:#d9cfb4;color:#2a2418;padding:16px 14px;transform:rotate(-.6deg);box-shadow:0 6px 18px rgba(0,0,0,.6);line-height:1.85;font-size:.95rem;white-space:pre-line;
   clip-path:polygon(0 0,97% 0,100% 6%,100% 100%,4% 100%,0 96%)}
-.memo::before{content:"まえの けいびいんの メモ";display:block;font-size:.75rem;color:#7a6b4a;border-bottom:1px dashed #7a6b4a;margin-bottom:8px}
+.memo::before{content:attr(data-from);display:block;font-size:.75rem;color:#7a6b4a;border-bottom:1px dashed #7a6b4a;margin-bottom:8px}
 .inInfo{background:var(--panel);border-left:3px solid var(--red);padding:10px 12px;margin-top:14px;font-size:.9rem;line-height:1.8}
 .tag{display:inline-block;font-size:.8rem;padding:0 6px;border:1px solid var(--line);color:var(--lamp)}
 .tag.new{border-color:var(--red);color:#ff9d92}
-.hint{min-height:1.5em;font-size:.85rem;color:var(--phos)}
+.hint{min-height:1.5em;font-size:.85rem;color:var(--phos);letter-spacing:.06em;line-height:1.5;word-break:break-all}
 .kval{font-size:2rem;min-height:1.35em;color:var(--ink);border-bottom:2px solid var(--line);margin:0 28% 6px}
 .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .keypad .choice{padding:8px 0;font-size:1.3rem}
@@ -223,7 +224,7 @@ h2{font-weight:400;color:var(--lamp);font-size:1.5rem;margin:4px 0 8px}
 #toast.on{transform:translate(-50%,0)}
 .gotBox{background:var(--panel);border-left:3px solid var(--lamp);padding:10px 12px;margin-top:10px;line-height:1.8;font-size:.92rem}
 .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
-.tabs .tog{padding:9px 0;font-size:.82rem}
+.tabs .tog{padding:9px 0;font-size:.82rem;line-height:1.35}
 .list{display:grid;gap:6px;margin-top:10px}
 .entry{background:var(--panel);border:2px solid var(--line);padding:9px 10px;text-align:left;border-radius:2px;line-height:1.5;font-size:.92rem}
 .entry small{display:block;color:var(--dim);font-size:.75rem}
@@ -284,7 +285,11 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
       <p>九九に せいかいすると でんきが たまる。むずかしい だんほど たくさん たまる。まちがえても だいじょうぶ。</p>
       <p>せいかいすると、ときどき アイテムが てにはいる。よるを クリアすると ひみつファイルが よめる。</p>
     </details>
-    <div class="label">よる（クリアすると つぎの よるが ひらく）</div>
+    <div class="tabs" id="chapTabs" style="grid-template-columns:1fr 1fr;margin-top:14px">
+      <button class="tog" data-ch="1">だい1しょう<br>かぞえうたの よる</button>
+      <button class="tog" data-ch="2">だい2しょう<br>ほんとうの よる</button>
+    </div>
+    <div class="label" id="chapNote">よる（クリアすると つぎの よるが ひらく）</div>
     <div class="grid" id="nights"></div>
     <div class="label" id="danLabel"></div>
     <div class="grid" id="dans"></div>
@@ -413,9 +418,9 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
      bio:"ねこの おどりロボット。3と 4のだん たんとう。\nみちを かえて まわりこむ。わらっている ように みえるのは、かおの ばねが こわれて もどらないから。"},
     {id:"horo",n:"ホロ",k:"ホ",t:"fukuro",d:"#e0c94a",c:"#7a6a3c",role:"vent",from:3,sp:1.5,
      bio:"ふくろうの ものしりロボット。6と 7のだん たんとう。\nろうかを つかわず、ダクトから つうきこうへ おりてくる。あの よるの ことを、やねうらから ぜんぶ みていた。"},
-    {id:"chu",n:"チュータ",k:"チ",t:"nezumi",d:"#cfcfcf",c:"#5e6166",role:"gnaw",from:4,sp:1.7,
+    {id:"chu",n:"チュータ",k:"チ",t:"nezumi",d:"#cfcfcf",c:"#5e6166",role:"gnaw",from:5,sp:1.7,
      bio:"ねずみの そうじロボット。8のだん たんとう。\nおそっては こない。でんきしつで ケーブルを かじって、でんきを どこかへ はこぼうと する。"},
-    {id:"zero",n:"ゼロ",k:"０",t:"zero",d:"#ffffff",c:"#8a9093",role:"zero",from:5,sp:1.4,
+    {id:"zero",n:"ゼロ",k:"０",t:"zero",d:"#ffffff",c:"#8a9093",role:"zero",from:7,sp:1.4,
      bio:"さいしょに つくられた ロボット。かおの かわも、こえも ない。\nけんきゅうしつから かくしつうろを とおって くる。たんとうの だんは……きろくが ない。"}];
   var HOME={walk:"stage",vent:"attic",gnaw:"base",zero:"lab"};
   var SIDE=["ひだりドア","みぎドア","つうきこう"];
@@ -442,24 +447,49 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
             store:["そうこ","3/1/4/3"],play:["ゆうぎしつ","3/3/4/5"],lab:["けんきゅうしつ","4/1/5/3"],pass:["かくしつうろ","4/3/5/5",1],hallL:["ひだりろうか","5/1/6/2"],hallR:["みぎろうか","5/4/6/5"]},
      next:{stage:["dining","dining","pass"],dining:["store","play"],store:["lab","hallL","play"],play:["pass","hallR","store"],lab:["hallL","hallL","pass"],pass:["hallR","hallR","lab"],
            hallL:["@0"],hallR:["@1"],attic:["duct"],duct:["@2"],base:["gen"]}}];
-  var NIGHTS=[
-    {one:1,rev:[2],neu:[5],mv:7000,atk:5200,dr:.55},
-    {one:1,rev:[2,5],neu:[3,4],mv:6200,atk:4700,dr:.62},
-    {rev:[2,3,4,5],neu:[6],mv:5600,atk:4300,dr:.7},
-    {rev:[3,4,5,6],neu:[7,8],mv:5000,atk:3900,dr:.78},
-    {rev:[5,6,7,8],neu:[9],mv:4600,atk:3600,dr:.85}];
-  var MEMO=[
-    "しんじんくんへ。\n\nこの こうじょうの ロボットは、よる 12じに めを あける。ポンタと ペンペンが ろうかを あるいて、この へやに くる。ドアを しめれば かえっていく。\n\nでんきは、つくえの はつでんきで ためる。九九に こたえると まわる、へんな きかいだ。\n\n……なぜ かれらが まいばん ここに くるのか、ぼくには わからなかった。",
-    "2にちめ。\n\nそうこの おくで ねていた ミケタが おきた。あいつは わらっている みたいな かおで、みちを かえて まわりこんで くる。カメラを よく みること。\n\nそうこの ゆかに、ふるい パンフレットが おちていた。あさに なったら ひろって おく。",
-    "3にちめ。\n\nてんじょうから おとが する。ホロだ。\n\nホロは ろうかを つかわない。ダクトを とおって、あたまの うえの つうきこうから おりてくる。つうきこうの シャッターを わすれるな。\n\nくみたてラインの ベルトは、だれも いないのに まだ うごいている。",
-    "4にちめ。\n\nでんきの へりかたが おかしい。ちかの でんきしつで、チュータが ケーブルを かじっている。九九を 2もん せいかいすれば にげていく。\n\n……でも あいつ、でんきを たべて いるんじゃ ない。どこかへ はこぼうと している ように みえる。",
-    "5にちめ。これが さいごの メモだ。\n\nけんきゅうしつの とびらが あいていた。なかに もう 1たい いる。なまえは ゼロ。かおの かわが ない。こえも ない。\n\nゼロは かくしつうろを しっている。ステージから いっきに ろうかまで くるぞ。\n\nぼくは あした やめる。きみは、さいごまで みとどけて くれ。"];
+  var B3=["ponta","pen","mike"], B4=B3.concat("horo"), B5=B4.concat("chu"), B6=B5.concat("zero");
+  var CH1=[
+    {m:1,b:["ponta","pen"],mv:8000,atk:6000,dr:.45,f:"f1"},
+    {m:2,b:B3,mv:7600,atk:5700,dr:.5},
+    {m:3,b:B4,mv:7200,atk:5400,dr:.55,f:"f2"},
+    {m:3,b:B4,mv:6800,atk:5100,dr:.6},
+    {m:4,b:B5,mv:6400,atk:4800,dr:.65,f:"f3"},
+    {m:4,b:B5,mv:6000,atk:4500,dr:.7},
+    {m:5,b:B6,mv:5600,atk:4300,dr:.74,f:"f4"},
+    {m:5,b:B6,mv:5200,atk:4000,dr:.78},
+    {m:5,b:B6,mv:4800,atk:3700,dr:.82,f:"f5"}];
+  var CH2=[
+    {m:2,b:B3,mv:5000,atk:3800,dr:.8,rev:[2,3,4,5],f:"g1"},
+    {m:3,b:B4,mv:4700,atk:3600,dr:.84,rev:[3,4,5,6],f:"g2"},
+    {m:4,b:B5,mv:4500,atk:3450,dr:.88,rev:[4,5,6,7],f:"g3"},
+    {m:5,b:B6,mv:4300,atk:3300,dr:.92,rev:[5,6,7,8],f:"g4"},
+    {m:5,b:B6,mv:4000,atk:3100,dr:.95,rev:[2,3,4,5,6,7,8,9]}];
+  var MEMO1=[
+    "しんじんくんへ。\n\nこの こうじょうの ロボットは、よる 12じに めを あける。ポンタと ペンペンが ろうかを あるいて、この へやに くる。ドアを しめれば かえっていく。\n\nでんきは、つくえの はつでんきで ためる。九九に こたえると まわる、へんな きかいだ。こんやは 1のだんで ならしておけ。\n\n……なぜ かれらが まいばん ここに くるのか、ぼくには わからなかった。",
+    "2にちめ。\n\nそうこの おくで ねていた ミケタが おきた。あいつは わらっている みたいな かおで、みちを かえて まわりこんで くる。カメラを よく みること。\n\nこんやの はつでんきは 2のだんだ。むずかしい だんほど でんきが たまる らしい。",
+    "3にちめ。\n\nてんじょうから おとが する。ホロだ。ホロは ろうかを つかわない。ダクトを とおって、あたまの うえの つうきこうから おりてくる。シャッターを わすれるな。\n\nそうこの ゆかで ひろった パンフレットを、つくえに おいて おいた。",
+    "4にちめ。\n\nくみたてラインの ベルトの うえに、ちいさな すずが ころがっていた。ミケタの ものだ。ふると、かならず 3かい なる。\n\nロボットたちの あしが、すこしずつ はやく なってきた。きのせい じゃない。",
+    "5にちめ。\n\nでんきの へりかたが おかしい。ちかの でんきしつで、チュータが ケーブルを かじっている。九九を 2もん せいかいすれば にげていく。\n\n……でも あいつ、でんきを たべて いるんじゃ ない。どこかへ はこぼうと している。",
+    "6にちめ。\n\nボイラーしつの かべに、こどもの らくがきを みつけた。ロボットたちと てを つないで わらっている え。\n\nえの したに、えんぴつで「ししち にじゅうはち」。\n\n20ねんまえの らくがき だろうか。だれが かいたんだろう。",
+    "7にちめ。\n\nけんきゅうしつの とびらが あいていた。なかに もう 1たい いる。なまえは ゼロ。かおの かわが ない。こえも ない。\n\nゼロは かくしつうろを しっている。ステージから いっきに ろうかまで くるぞ。",
+    "8にちめ。\n\nぼくは もう げんかいだ。でも、ひとつ きづいた ことが ある。\n\n九九に せいかいする たびに、ロボットたちの あしおとが すこし やさしく なる。まるで、わすれていた うたを おもいだして いる みたいに。",
+    "9にちめ。これが ぼくの さいごの メモだ。\n\nぼくは 8のだんで にげだした。9のだんは、まだ だれも こたえた ことが ない。\n\nきみが はじめての ひとに なって くれ。あさ 6じに なにが おきるのか、ぼくも しりたかった。"];
+  var MEMO2=[
+    "ザザ……きこえるかい。わたしは ネジマ。\n\n9のだんまで こたえて くれて ありがとう。うたは つながった。でも ひとつ こまった ことが ある。うたの じゅんばんが バラバラに なってしまったんだ。\n\nこんやから かれらは、いろんな だんを まぜこぜに うたいながら くる。まえより ずっと はやいぞ。",
+    "ザザ……ミケタの かおの ばねを、きみが なおして くれたそうだね。\n\nところで、きみは ふしぎに おもわないか。わたしが どこから はなしているのか。そして、なぜ かれらが きみの へやばかり めざすのか。",
+    "ザザ……ホロが やねうらで、なにかを ずっと まもっている。テープだ。わたしが かくした 9ほんの カセット。\n\nだんごとに 1ぽん。せいかいを かさねれば、きっと みつかる。あつめて おいて くれ。",
+    "ザザ……でんきしつの おくの とびらは、もう あいている。チュータが はこびつづけた でんきで、ゼロが じぶんで うごけるように なった。\n\nゼロは、きみに わたしたい ものが あるらしい。",
+    "ザザ……さいごの よるだ。きょうは みんなが いっしょに くる。2から 9まで、まぜこぜの うたを うたいながら。\n\nあさまで もちこたえたら、9ほんの カセットを はつでんきに つないで くれ。ほんとうの あさが くる。"];
   var FILES={
     f1:["けいびにっし","つきかげ おもちゃこうじょうは、20ねんまえに とじた。\n\nなのに ロボットたちは、いまも まいばん 12じに めを あける。そして かならず、けいびしつを めざして あるいてくる。\n\nまえの けいびいんは みんな、5にち もたずに やめた。にっしの さいごの ページには、こう かいてある。\n\n「かれらは おそいに きているんじゃ ない きがする。なにかを いいたそうに、くちを あけるんだ」"],
     f2:["こうじょうの パンフレット","『ようこそ！ かぞえうた ロボットの ショーへ』\n\nポンタは 2のだん、ミケタは 3と 4のだん、ペンペンは 5のだん、ホロは 6と 7のだん、チュータは 8のだんを うたいます。さいごの 9のだんは、みんなで いっしょに うたいます。\n\nうたが さいごまで おわると、あさ 6じの チャイムが なって、ロボットたちは すやすや ねむります。\n\n（すみに、えんぴつで ちいさく かいてある）\n「1のだんは だれが うたうの？」"],
     f3:["はかせの しゅうりきろく","ネジマはかせの きろく。\n\n『あの よるの ていでんで、5たい ぜんぶの きおくチップに ひびが はいった。うたを とちゅうまでしか おもいだせない。\n\nうたが おわらないと、6じの チャイムが なっても ねむれない。だから かれらは、うたの つづきを しっている ひとを さがして あるく。\n\nこの へやに くるのは、わたしが まいばん ここで かれらを なおして いたからだ』\n\nけいびしつは、もともと はかせの さぎょうべや だった。"],
     f4:["でんきしつの はりがみ","『おおもとの スイッチに さわるな。　ネジマ』\n\nその したに、つめで ひっかいた ような じが ある。\n\n『キッタノハ　ボク』\n\nチュータが かじっていた ケーブルは、けんきゅうしつの、かぎの かかった とびらに つながっていた。\n\nチュータは でんきを ぬすんで いたんじゃ ない。とびらの むこうの だれかに、でんきを とどけようと していた。"],
-    f5:["はかせの てがみ","『これを よんでいる けいびいんへ。\n\nゼロは、わたしが さいしょに つくった ロボットだ。0から かぞえる ために つくった。でも こえを つけて やれなかった。ゼロには うたう だんが ない。\n\nこうじょうが とじると きまった よる、ロボットたちは バラバラに されて うられる はずだった。ゼロは おおもとの スイッチを きって、こうじょうを まっくらに した。みんなを かくす ために。\n\nわたしは、みんなを なおす ほうほうを さがしに いく。もどれなかった ときの ために、たのみを かいて おく。\n\nつくえの はつでんきは、ただの はつでんき じゃない。九九の こたえを、かれらの チップに きざむ きかいだ。きみが せいかい する たびに、うたが 1ぎょう つながる。むずかしい だんほど、ふかく きざまれる。\n\nどうか、9のだんまで こたえて やってほしい』"],
+    f5:["はかせの てがみ","『これを よんでいる けいびいんへ。\n\nゼロは、わたしが さいしょに つくった ロボットだ。0から かぞえる ために つくった。でも こえを つけて やれなかった。ゼロには うたう だんが ない。\n\nこうじょうが とじると きまった よる、ロボットたちは バラバラに されて うられる はずだった。ゼロは おおもとの スイッチを きって、こうじょうを まっくらに した。みんなを かくす ために。\n\nわたしは、みんなを なおす ほうほうを さがしに いく。もどれなかった ときの ために、たのみを かいて おく。\n\nつくえの はつでんきは、ただの はつでんき じゃない。九九の こたえを、かれらの チップに きざむ きかいだ。きみが せいかい する たびに、うたが 1ぎょう つながる。むずかしい だんほど、ふかく きざまれる。\n\nどうか、9のだんまで こたえて やってほしい』\n\n（この てがみは、9のだんを こたえきった あさ、つくえの ひきだしが ひとりでに ひらいて でてきた）"],
+    g1:["ラジオの こえ","けいびしつの たなの おくで、ふるい ラジオが ひとりでに ついた。\n\nはかせの こえだった。はかせは いま、とおい まちの びょういんに いる。からだが よわって、こうじょうへは もう もどれない。\n\nむかし ロボットたちと はなす ために つくった つうしんきで、まいばん この へやを よんでいた。だれも こたえなかった 20ねんかん、ずっと。"],
+    g2:["ミケタの わらいがお","かおの ばねを なおすと、ミケタの わらいがおは、ほんとうの わらいがおに なった。\n\nミケタの きおくチップに、ひとつだけ はっきり のこっている ばめんが あった。\n\nショーの さいごの ひ。4のだんで つまった ミケタに、ちいさな こどもが こたえを おしえて くれた。「ししち にじゅうはち だよ」"],
+    g3:["けんがくしゃ めいぼ","20ねんまえ、さいごの ショーの ひの けんがくしゃ めいぼ。\n\nいちばん さいごの ぎょうに、こどもの じで なまえが かいてある。\n\nけいびいんの ひきつぎしょに かいた じぶんの なまえと、まったく おなじ なまえだった。\n\nミケタに 4のだんを おしえたのは、きみ だった。ボイラーしつの らくがきも。だから ロボットたちは、まいばん きみの いる へやへ くる。"],
+    g4:["ゼロの おくりもの","けいびしつの ドアの まえに、ゼロが なにかを おいていった。\n\nちいさな ねじまきの カギと、メモが 1まい。メモの じは ふるえていて、まるで はじめて じを かいた ひとの ようだった。\n\n『イチ ノ ダン ヲ　オシエテ』"],
     f6:["ほんとうの あさ","9ほんの テープを、はつでんきに つないだ。\n\nポンタが 2のだんを うたった。ミケタが 3と 4を、ペンペンが 5を、ホロが 6と 7を、チュータが 8を うたった。だれも とちゅうで とまらなかった。\n\n9のだんは みんなで うたった。そのとき、うしろで ちいさな こえが した。\n\n「いんいちが、いち」\n\nゼロだった。\n\n1のだんは、さいしょから ゼロの うた だったのだ。はかせは テープの なかに、ゼロの ための こえを かくして いた。\n\nあさ 6じ。チャイムが なった。6たいは めを とじて、20ねんぶりに ねむった。\n\nけいびしつの つくえに、あたらしい メモが 1まい ふえていた。\n\n『ありがとう。あしたの よるも、うたを ききに きて くれるかい？　ネジマ』"]};
   var PART=[null,
     ["さびた ねじ","あたまの かわが ない ロボットの ねじ。だれの ものかは、まだ わからない。"],
@@ -484,12 +514,13 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
 
   // きろく
   var KEY="kukuNight3", conf, S;
-  var DEF={sound:true,bgm:true,vol:2,scare:2,speed:1,drain:1,hour:20,startPw:50,newRate:40,hint:1,mode:"4",one:true,bMin:1,retry:true,drop:1,openAll:false,cdans:[2,3,4,5,6,7,8,9]};
+  var DEF={sound:true,bgm:true,vol:2,scare:2,speed:1,drain:1,hour:20,startPw:50,newRate:60,hint:1,mode:"4",one:true,bMin:1,retry:true,drop:1,openAll:false,cdans:[2,3,4,5,6,7,8,9]};
   var D;
   function blank(){ return {stars:{},stats:{},items:{},files:{},seen:{},cus:{lv:[2,2,2,2,2,2],map:5},set:{}}; }
   function fix(){
     for(var k in DEF) if(D.set[k]===undefined) D.set[k]=Array.isArray(DEF[k])?DEF[k].slice():DEF[k];
     if(!Array.isArray(D.set.cdans)||!D.set.cdans.length) D.set.cdans=DEF.cdans.slice();
+    if(!D.set.v4){ D.set.newRate=60; D.set.v4=1; }
     S=D.set; conf=D.set;
   }
   function adopt(s){
@@ -588,6 +619,7 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
   }
 
 
+
   // おと
   var AC=null, master=null, amb=[];
   function audioInit(){
@@ -673,6 +705,7 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
   function bgmOn(mode){ bgmMode=mode||"game"; bgmOff(); if(!AC||!conf.sound||!conf.bgm) return; bgmStep=0; danger=false; bgmNext=AC.currentTime+.4; bgmT=setInterval(bgmTick,80); }
 
 
+
   snd.item=function(){tone("triangle",880,1320,.15,.2);tone("triangle",1320,1760,.25,.2,.15);};
   function au(){ audioInit(); if(master) master.gain.value=[.25,.55,.9][S.vol-1]||.55; }
   var musicMode=null;
@@ -691,54 +724,67 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
   function toast(t){ var e=$("toast"); e.textContent=t; e.classList.add("on"); clearTimeout(toastT); toastT=setTimeout(function(){e.classList.remove("on")},2800); }
 
   // ---------- タイトル ----------
-  function unlocked(){ if(S.openAll) return 5; var m=1; for(var n=1;n<=4;n++) if(D.stars[n]) m=n+1; return m; }
+  function SK(ch,n){ return ch===1 ? String(n) : "c2-"+n; }
+  function ch2Open(){ return S.openAll||!!D.stars["9"]; }
+  function unlocked(ch){
+    var max=ch===1?9:5; if(S.openAll) return max; if(ch===2&&!ch2Open()) return 0;
+    var m=1; for(var n=1;n<max;n++){ if(D.stars[SK(ch,n)]) m=n+1; else break; } return m;
+  }
   function pool(a){ return S.one ? a.slice() : a.filter(function(x){return x!==1}); }
   function badge(d){ var ok=(D.stats[d]||{}).ok||0; return ok>=30?3:ok>=15?2:ok>=5?1:0; }
-  var night=unlocked();
+  var chap=D.stars["9"]?2:1, night=unlocked(chap)||1;
   function drawTitle(){
-    if(night>unlocked()) night=unlocked();
+    if(chap===2&&!ch2Open()) chap=1;
+    var U=unlocked(chap), max=chap===1?9:5;
+    if(night>U) night=U||1; if(night>max) night=max;
     $("heroBots").innerHTML=BOTS.map(function(b){ var k=D.seen[b.id];
       return '<div class="hero'+(k?"":" unk")+'">'+botSvg(b)+'<span>'+(k?b.n:"？？？<br>よる"+b.from)+'</span></div>'; }).join("");
-    var h="", U=unlocked(), n, d;
-    for(n=1;n<=5;n++){ var st=D.stars[n]||0, lock=n>U;
+    [].forEach.call($("chapTabs").children,function(t){ var c=+t.dataset.ch; t.setAttribute("aria-pressed",c===chap);
+      t.disabled= c===2&&!ch2Open(); t.innerHTML= c===1?"だい1しょう<br>かぞえうたの よる":(ch2Open()?"":"🔒 ")+"だい2しょう<br>ほんとうの よる"; });
+    $("chapNote").textContent= chap===1 ? "よる 1〜9（1よるに 1つずつ、あたらしい だんが ふえる）" : "よる 1〜5（いろんな だんが まぜこぜで でる）";
+    var h="", n, d;
+    for(n=1;n<=max;n++){ var st=D.stars[SK(chap,n)]||0, lock=n>U;
       h+='<button class="chip" data-n="'+n+'" aria-pressed="'+(n===night)+'"'+(lock?' disabled aria-label="よる'+n+' まだ あそべない"':'')+'>'+(lock?"🔒":n)+'<small>'+"★★★".slice(0,st)+'</small></button>'; }
     $("nights").innerHTML=h; h="";
-    var N=NIGHTS[night-1];
-    for(d=1;d<=9;d++){ var cls= N.neu.indexOf(d)>=0?" on new": (N.rev.indexOf(d)>=0||(d===1&&N.one&&S.one))?" on":"";
+    var R=makeRun(chap,night);
+    for(d=1;d<=9;d++){ var cls= R.neu.indexOf(d)>=0?" on new": R.rev.indexOf(d)>=0?" on":""; if(d===1&&!S.one) cls="";
       h+='<div class="chip'+cls+'">'+d+'のだん<small>'+BADGE[badge(d)]+'</small></div>'; }
     $("dans").innerHTML=h;
-    $("danLabel").textContent="よる "+night+"「"+MAPS[night-1].name+"」で でる だん";
-    var cl=!(D.stars[5]||S.openAll);
+    $("danLabel").textContent=R.label+"「"+R.map.name+"」で でる だん";
+    var cl=!(D.stars["c2-5"]||S.openAll);
     $("cusBtn").disabled=cl; $("cusBtn").innerHTML=(cl?"🔒 ":"")+"カスタム<br>ナイト";
   }
-  $("nights").onclick=function(e){ var b=e.target.closest("[data-n]"); if(!b||+b.dataset.n>unlocked()) return; night=+b.dataset.n; drawTitle(); };
+  $("chapTabs").onclick=function(e){ var t=e.target.closest("[data-ch]"); if(!t||t.disabled) return; chap=+t.dataset.ch; night=unlocked(chap)||1; drawTitle(); };
+  $("nights").onclick=function(e){ var b=e.target.closest("[data-n]"); if(!b||+b.dataset.n>unlocked(chap)) return; night=+b.dataset.n; drawTitle(); };
   function home(){ stop(); drawTitle(); show("sTitle"); titleMusic(); }
   document.addEventListener("click",function(e){ if(e.target.closest("[data-home]")) home(); });
 
   // ---------- よるの じゅんび ----------
   var run=null;
-  function makeRun(n){
-    var N=NIGHTS[n-1];
-    return {n:n,custom:false,label:"よる "+n,map:MAPS[n-1],bg:n,memo:MEMO[n-1],atk:N.atk,dr:N.dr,rev:N.rev,neu:N.neu,one:!!N.one,
-      bots:BOTS.filter(function(b){return b.from<=n}).map(function(b){return {b:b,mv:N.mv*b.sp}})};
+  function makeRun(ch,n){
+    var C=(ch===1?CH1:CH2)[n-1], rev=[], neu=[], i;
+    if(ch===1){ neu=[n]; for(i=1;i<n;i++) rev.push(i); } else rev=C.rev.slice();
+    return {ch:ch,n:n,custom:false,label:(ch===1?"":"だい2しょう ")+"よる "+n,map:MAPS[C.m-1],bg:C.m,memo:(ch===1?MEMO1:MEMO2)[n-1],
+      from:ch===1?"まえの けいびいんの メモ":"ラジオから きこえる こえ",atk:C.atk,dr:C.dr,rev:rev,neu:neu,file:C.f||null,
+      bots:BOTS.filter(function(b){return C.b.indexOf(b.id)>=0}).map(function(b){return {b:b,mv:C.mv*b.sp}})};
   }
   function makeCustom(){
     var m=D.cus.map, M=MAPS[m-1], bots=[], mx=0, sum=0;
     BOTS.forEach(function(b,i){ var lv=D.cus.lv[i]; if(lv>0&&M.rooms[HOME[b.role]]){ bots.push({b:b,mv:(8500-lv*1000)*b.sp}); mx=Math.max(mx,lv); sum+=lv; } });
-    return {n:0,custom:true,label:"カスタム",map:M,bg:m,memo:"カスタムナイト。\n\nロボットの つよさは きみが きめた とおりだ。じぶんで きめたのだから、もんくは いえない。\n\nでてくる ロボットは "+bots.length+"たい。",
+    return {n:0,custom:true,label:"カスタム",from:"カスタムナイト",map:M,bg:m,memo:"カスタムナイト。\n\nロボットの つよさは きみが きめた とおりだ。じぶんで きめたのだから、もんくは いえない。\n\nでてくる ロボットは "+bots.length+"たい。",
       atk:5400-mx*400,dr:.5+.02*sum,rev:[],neu:S.cdans.slice().sort(),bots:bots};
   }
   function intro(r){
     run=r;
     $("inTitle").textContent=r.label+"「"+r.map.name+"」";
-    $("inMemo").textContent=r.memo;
-    var neu=pool(r.neu), rev=(r.one&&S.one?[1]:[]).concat(pool(r.rev).filter(function(x){return r.neu.indexOf(x)<0}));
-    $("inDans").innerHTML=(rev.length?'できる だん：'+rev.join("・")+'　':'')+'<span class="tag new">'+(r.custom?"でる だん ":"あたらしい だん ")+neu.join("・")+'</span><br>むずかしい だんほど でんきが たくさん たまる。';
+    $("inMemo").textContent=r.memo; $("inMemo").dataset.from=r.from;
+    var neu=pool(r.neu), rev=pool(r.rev).filter(function(x){return r.neu.indexOf(x)<0});
+    $("inDans").innerHTML=(rev.length?(r.ch===2?'でる だん：':'できる だん：')+rev.join("・")+'　':'')+(neu.length?'<span class="tag new">'+(r.custom?"でる だん ":"あたらしい だん ")+neu.join("・")+'</span>':'')+'<br>むずかしい だんほど でんきが たくさん たまる。';
     var nb=r.bots.filter(function(x){return !D.seen[x.b.id]}).length;
     $("inNew").textContent= nb? "こんや、あたらしい ロボットが "+nb+"たい めを さます。" : "";
     show("sIntro");
   }
-  $("startBtn").onclick=function(){ intro(makeRun(night)); };
+  $("startBtn").onclick=function(){ intro(makeRun(chap,night)); };
   $("goBtn").onclick=function(){ start(); };
 
   // ---------- ゲーム ----------
@@ -873,7 +919,6 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
     var rev=pool(run.rev), neu=pool(run.neu);
     if(!rev.length&&!neu.length) neu=[2];
     var ds=(neu.length&&(!rev.length||Math.random()*100<S.newRate))?neu:rev, a, b, key, g=0;
-    if(run.one&&S.one&&Math.random()<.15) ds=[1];
     do{ a=ds[Math.floor(Math.random()*ds.length)]; b=S.bMin+Math.floor(Math.random()*(10-S.bMin)); key=a+"×"+b; }while(key===last&&++g<20);
     return {a:a,b:b};
   }
@@ -882,7 +927,8 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
     last=a+"×"+b; cur={a:a,b:b,ans:a*b,isNew:!run.custom&&run.neu.indexOf(a)>=0};
     $("qtext").textContent=a+" × "+b+" ＝ ？";
     var showHint=S.hint===2||(S.hint===1&&cur.isNew);
-    $("hint").textContent=!showHint?"": b===1 ? "ヒント："+a+" が 1こ ぶん" : "ヒント："+a+"×"+(b-1)+"＝"+a*(b-1)+" に "+a+" を たす";
+    var dots=[]; for(var g2=0;g2<b;g2++) dots.push("●".repeat(a));
+    $("hint").textContent=!showHint?"": (a*b<=30&&a>1) ? "かぞえてみよう："+dots.join(" ") : b===1 ? "ヒント："+a+" が 1こ ぶん" : "ヒント："+a+"×"+(b-1)+"＝"+a*(b-1)+" に "+a+" を たす";
     if(S.mode==="key"){ typed=""; $("kval").textContent=""; [].forEach.call($("keypad").children,function(c){c.disabled=false}); }
     else{
       var cnt=S.mode==="3"?3:4, set=[cur.ans], cand=[a*(b+1),a*(b-1),(a+1)*b,(a-1)*b,cur.ans+1,cur.ans-1,cur.ans+10,a+b];
@@ -943,13 +989,13 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
       : '<div class="label" style="margin:0">まちがい なし！</div>';
   }
   function checkEnding(){
-    if(D.files.f6) return false;
-    for(var i=1;i<=5;i++) if(!D.files["f"+i]) return false;
-    for(i=1;i<=9;i++) if(!D.items["t"+i]) return false;
+    if(D.files.f6||!D.stars["c2-5"]) return false;
+    for(var i=1;i<=9;i++) if(!D.items["t"+i]) return false;
     D.files.f6=1; return true;
   }
-  function gotHtml(newFile,ending){
+  function gotHtml(newFile,ending,extra){
     var a=[];
+    if(extra) a.push(extra);
     if(newFile) a.push("ひみつファイル「"+FILES[newFile][0]+"」を てにいれた");
     got.forEach(function(id){ a.push("アイテム「"+itemName(id)+"」を てにいれた"); });
     if(ending) a.push("★ さいごの ファイル「"+FILES.f6[0]+"」が ひらいた");
@@ -998,20 +1044,25 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
   }
   function win(){
     stop(); snd.win(); $("endBox").classList.remove("lose");
-    var st= power>=60?3: power>=30?2:1, newFile=null, n=run.n;
+    var st= power>=60?3: power>=30?2:1, newFile=null, n=run.n, ch=run.ch, extra=null;
     if(!run.custom){
-      if(st>(D.stars[n]||0)) D.stars[n]=st;
-      if(!D.files["f"+n]){ D.files["f"+n]=1; newFile="f"+n; }
+      var key=SK(ch,n), first=!D.stars[key];
+      if(st>(D.stars[key]||0)) D.stars[key]=st;
+      if(run.file&&!D.files[run.file]){ D.files[run.file]=1; newFile=run.file; }
+      if(ch===1&&n===9&&first) extra="★ だい2しょう「ほんとうの よる」が ひらいた";
+      if(ch===2&&n===5&&first) extra="★ カスタムナイトが ひらいた";
     }
     var ending=checkEnding(); save();
     $("endFace").innerHTML="";
     $("endBig").textContent="6 AM"; $("endBig").className="big";
     $("stars").textContent="★★★".slice(0,st)+"☆☆☆".slice(0,3-st);
-    $("endText").textContent=(run.custom?"カスタムナイト クリア！ ": n>=5?"5つの よるを まもりきった！ ":"よる "+n+" クリア！ ")+"せいかい "+correct+"もん／のこり でんき "+Math.ceil(power)+"%";
+    $("endText").textContent=(run.custom?"カスタムナイト クリア！ ": ch===1&&n===9?"9のだんまで まもりきった！ ": ch===2&&n===5?"だい2しょう クリア！ ": run.label+" クリア！ ")+"せいかい "+correct+"もん／のこり でんき "+Math.ceil(power)+"%";
     if(run.custom) againBtn("もういちど カスタム", function(){ intro(makeCustom()); });
-    else if(n>=5) againBtn("もういちど よる 5", function(){ intro(makeRun(5)); });
-    else againBtn("つぎの よるへ", function(){ night=n+1; intro(makeRun(night)); });
-    gotHtml(newFile,ending);
+    else if(ch===1&&n<9) againBtn("つぎの よるへ", function(){ chap=1; night=n+1; intro(makeRun(1,night)); });
+    else if(ch===1) againBtn("だい2しょうへ", function(){ chap=2; night=1; intro(makeRun(2,1)); });
+    else if(n<5) againBtn("つぎの よるへ", function(){ chap=2; night=n+1; intro(makeRun(2,night)); });
+    else againBtn("もういちど だい2しょう よる 5", function(){ intro(makeRun(2,5)); });
+    gotHtml(newFile,ending,extra);
     $("missBox").innerHTML=missHtml();
     show("sEnd"); setTimeout(titleMusic,1500);
   }
@@ -1023,9 +1074,10 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
     var a=[], i, d;
     if(arcTab==="file"){
       var tp=0; for(i=1;i<=9;i++) if(D.items["t"+i]) tp++;
-      var fl=0; for(i=1;i<=5;i++) if(D.files["f"+i]) fl++;
-      for(i=1;i<=6;i++){ var id="f"+i, has=!!D.files[id];
-        a.push({id:id,has:has,title:has?FILES[id][0]:"？？？",sub:has?"ファイル "+i: i<6?"よる"+i+"を クリアすると よめる":"ファイル5まいと カセット9ほんで ひらく（いま "+(fl+tp)+"／14）",body:FILES[id][1]}); }
+      [["f1","だい1しょう よる1"],["f2","だい1しょう よる3"],["f3","だい1しょう よる5"],["f4","だい1しょう よる7"],["f5","だい1しょう よる9"],
+       ["g1","だい2しょう よる1"],["g2","だい2しょう よる2"],["g3","だい2しょう よる3"],["g4","だい2しょう よる4"],["f6",""]].forEach(function(x,k){
+        var id=x[0], has=!!D.files[id];
+        a.push({id:id,has:has,title:has?FILES[id][0]:"？？？",sub:has?"ファイル "+(k+1): id!=="f6"?x[1]+"を クリアすると よめる":"だい2しょう よる5を クリアして、カセット9ほんを あつめると ひらく（カセット "+tp+"／9）",body:FILES[id][1]}); });
     }else if(arcTab==="bot"){
       BOTS.forEach(function(b){ var has=!!D.seen[b.id]; a.push({id:b.id,has:has,title:has?b.n:"？？？",sub:has?"よる"+b.from+"から":"よる"+b.from+"で あらわれる",body:b.bio,bot:b}); });
     }else if(arcTab==="dan"){
@@ -1044,7 +1096,7 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
   }
   function drawArc(){
     var c=0, k; for(k in D.files) c++; for(k in D.items) c++; for(k in D.seen) c++;
-    $("arcCount").textContent=c+"／30";
+    $("arcCount").textContent=c+"／34";
     [].forEach.call($("arcTabs").children,function(b){ b.setAttribute("aria-pressed",b.dataset.t===arcTab); });
     var a=arcData(), det=$("arcDetail"), sel=null;
     $("arcList").innerHTML=a.map(function(e){ if(e.id===arcSel&&e.has) sel=e;
@@ -1069,7 +1121,7 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
     ["drain","でんきの へりかた",[[0,"すくない"],[1,"ふつう"],[2,"おおい"]],1],
     ["hour","1じかんの ながさ（1よるは この 6ばい）",[[15,"15びょう"],[20,"20びょう"],[30,"30びょう"]],1],
     ["startPw","さいしょの でんき",[[50,"50%"],[70,"70%"],[100,"100%"]],1],
-    ["newRate","あたらしい だんが でる わりあい",[[20,"20%"],[40,"40%"],[60,"60%"],[100,"100%"]],1],
+    ["newRate","あたらしい だんが でる わりあい（だい1しょう）",[[20,"20%"],[40,"40%"],[60,"60%"],[100,"100%"]],1],
     ["hint","ヒント",[[0,"なし"],[1,"あたらしい だんだけ"],[2,"ぜんぶ"]],1],
     ["mode","こたえかた",[["3","3たく"],["4","4たく"],["key","すうじを うつ"]],1],
     ["one","1のだん",[[true,"だす"],[false,"ださない"]],1],
@@ -1116,7 +1168,7 @@ textarea{width:100%;height:74px;background:#000;color:var(--phos);border:1px sol
   var rstArm=false;
   $("rstBtn").onclick=function(){
     if(!rstArm){ rstArm=true; $("rstBtn").textContent="ほんとうに けす（もういちど おす）"; setTimeout(function(){ rstArm=false; $("rstBtn").textContent="きろくを けす"; },4000); return; }
-    rstArm=false; var keep=D.set; D=blank(); D.set=keep; fix(); save(); night=1; $("rstBtn").textContent="きろくを けす"; $("dataMsg").textContent="きろくを けしました（せっていは そのまま）。";
+    rstArm=false; var keep=D.set; D=blank(); D.set=keep; fix(); save(); chap=1; night=1; $("rstBtn").textContent="きろくを けす"; $("dataMsg").textContent="きろくを けしました（せっていは そのまま）。";
   };
 
   // ---------- カスタムナイト ----------
